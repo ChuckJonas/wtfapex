@@ -31,3 +31,8 @@ Apperently once upon a time, generics were part of apex.  However, they have sin
 Why would you want generics when you're OS has perfectly good Copy & Paste functionality built right into it?
 
 (Vote for Generics)[https://success.salesforce.com/ideaView?id=08730000000aDnYAAU]
+
+## Initlizing Abstract Classes
+
+https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1
+
