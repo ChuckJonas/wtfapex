@@ -62,3 +62,8 @@ System.debug(x instanceOf Decimal); // true
 ```
 
 Source (Dainel Barrileger)[https://twitter.com/FishOfPrey/status/1051965154454265856]
+
+
+## Mutating Dates
+
+https://twitter.com/FishOfPrey/status/869381316105588736 since been fixed
