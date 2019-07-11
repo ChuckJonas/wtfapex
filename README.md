@@ -1,7 +1,7 @@
 # What the f*ck Apex?
 A list of things that make Salesforce Apex developers hate their lives.
 
-Inspired by (wtfjs)[https://github.com/denysdovhan/wtfjs]
+Inspired by [wtfjs](https://github.com/denysdovhan/wtfjs)
 
 ### When a boolean is not a boolean
 
@@ -11,7 +11,7 @@ if(b!=true) system.debug(‘b is not true’);
 if(b!=false) system.debug(‘b is not false’);
 ```
 
-See (Advanced Apex Programming in Salesforce)[http://advancedapex.com/2012/08/23/funwithbooleans/] for explination.
+See [Advanced Apex Programming in Salesforce](http://advancedapex.com/2012/08/23/funwithbooleans/) for explination.
 
 ### String compare is Case-insenstive (except when they are not) 
 
@@ -39,7 +39,7 @@ public class Database {
 Running `Database.query('foo')` will call our new class (essentially override the [Database methods](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_dynamic_soql.htm)!?)
 
 
-(source)[https://twitter.com/FishOfPrey/status/1013530412121915392]
+[source](https://twitter.com/FishOfPrey/status/1013530412121915392)
 
 ### System can have ambiguous returns types
 
@@ -102,7 +102,7 @@ System.debug(x instanceOf Double);  // true
 System.debug(x instanceOf Decimal); // true
 ```
 
-Source (Dainel Barrileger)[https://twitter.com/FishOfPrey/status/1051965154454265856]
+Source [Dainel Barrileger](https://twitter.com/FishOfPrey/status/1051965154454265856)
 
 
 ## Since Fixed
