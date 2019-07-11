@@ -14,7 +14,7 @@ if(b!=false) system.debug(‘b is not false’);
 
 See [Advanced Apex Programming in Salesforce](http://advancedapex.com/2012/08/23/funwithbooleans/) for explination.
 
-### String compare is Case-insenstive (except when they are not) 
+### String compare is Case-insenstive (except when it's not) 
 
 ``` apex
 String x = 'Abc';
