@@ -53,18 +53,23 @@ Try writing your own method to dot this and you'll get a error:
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
 
-(Objects in hascodes)[https://salesforce.stackexchange.com/questions/41741/map-set-size-when-sobjects-are-duplicated/41743#41743]
+[Objects in hascodes](https://salesforce.stackexchange.com/questions/41741/map-set-size-when-sobjects-are-duplicated/41743#41743)
 
 ### JSON Serialization
 
 1. There way to control automatic serialization of object properties (like `[JsonProperty(PropertyName = "FooBar")]` in C#)
 2. There are reserved keywords that you can't use as property names.
 
-Meaning the following cannot be parsed or generated using `JSON.deserialize` or `JSON.serialize`.
+Meaning the following cannot be parsed or generated using `JSON.deserialize` or `JSON.serialize`:
 
-### Work Arounds
-- https://salesforce.stackexchange.com/questions/2276/how-do-you-deserialize-json-properties-that-are-reserved-words-in-apex
+``` json
+{
+   msg: 'hello world',
+   from: 'Dr. Dingus'
+}
+```
 
+[Work Around](https://salesforce.stackexchange.com/questions/2276/how-do-you-deserialize-json-properties-that-are-reserved-words-in-apex)
 
 ### Generics (parametrized interfaces) exist but you can't use them
 
@@ -72,11 +77,20 @@ Apperently once upon a time, generics were part of apex.  However, they have sin
 
 Why would you want generics when you're OS has perfectly good Copy & Paste functionality built right into it?
 
-(Vote for Generics)[https://success.salesforce.com/ideaView?id=08730000000aDnYAAU]
+[Vote for Generics](https://success.salesforce.com/ideaView?id=08730000000aDnYAAU)
 
 ### Initializing Abstract Classes
 
-https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1
+``` apex
+public abstract class ImAbstract {
+    public String foo;
+}
+
+ImAbstract orAmI = (ImAbstract) JSON.deserialize('{"foo":"bar"}', ImAbstract.class);
+System.debug(orAmI.foo);
+```
+
+[source](https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1)
 
 ### Polymorphic Primatives
 
@@ -97,7 +111,8 @@ Thankfully these WTF's have since been fixed by Salesforce.  We'll keep them doc
 
 ### Mutating Dates
 
-https://twitter.com/FishOfPrey/status/869381316105588736 since been fixed
+https://twitter.com/FishOfPrey/status/869381316105588736
 
 ### More hashcode fun
-https://twitter.com/FishOfPrey/status/1016821563675459585 (bug that has since been fixed)[https://salesforce.stackexchange.com/questions/224490/bug-in-list-contains-for-id-data-type]
+https://twitter.com/FishOfPrey/status/1016821563675459585
+https://salesforce.stackexchange.com/questions/224490/bug-in-list-contains-for-id-data-type
