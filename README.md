@@ -1,5 +1,6 @@
 # What the f*ck Apex?
-A list of things that make Salesforce Apex developers hate their lives.
+
+> A list of funny and tricky Apex examples
 
 Inspired by [wtfjs](https://github.com/denysdovhan/wtfjs)
 
@@ -64,8 +65,8 @@ Meaning the following cannot be parsed or generated using `JSON.deserialize` or 
 
 ``` json
 {
-   msg: 'hello world',
-   from: 'Dr. Dingus'
+   "msg": "hello dingus",
+   "from": "Dr. Dingus"
 }
 ```
 
