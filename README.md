@@ -22,7 +22,7 @@ String y = 'abc';
 System.assert(x == y); // passes
 System.assertEquals(x, y); // fails
 ```
-[Explination](https://salesforce.stackexchange.com/questions/80456/is-there-any-difference-in-equals-and-for-string-variables)
+[Explanation](https://salesforce.stackexchange.com/questions/80456/is-there-any-difference-in-equals-and-for-string-variables)
 
 ### Shadowing System (global) classes
 
