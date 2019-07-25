@@ -52,6 +52,51 @@ System.assertEquals(IExist.class, IExist.IDont.Class); //passes
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1154135982280597504)
 
+### Exception are "exceptional"
+
+In their naming conventions:
+
+```java
+public class OhGodBees extends Exception{}
+//fails: OhGodBees: Classes extending Exception must have a name ending in 'Exception'
+```
+
+Constructors:
+
+```java
+public class BeesException extends Exception{
+    public BeesException(){}
+}
+//fails: System exception constructor already defined: <Constructor>()
+```
+
+And Overrides:
+
+```java
+public class BeesException extends Exception{
+    public BeesException(String message, Boolean noop){
+        this.setMessage(message);
+    }
+    public void setMessage(String message){
+        super.setMessage(message);
+    }
+}
+//fails: BeesException: Method must use the override keyword: void setMessage(String)
+
+
+public class BeesException extends Exception{
+    public BeesException(String message, Boolean noop){
+        this.setMessage(message);
+    }
+    public override void setMessage(String message){
+        super.setMessage(message);
+    }
+}
+//fails: Object has no superclass for super invocation
+```
+
+[For Explination see](https://www.ca-peterson.com/2015/01/23/leaky_abstractions_apex_exception_types/)
+
 ### System can have ambiguous returns types
 
 `Database.query` is one of many cases where the salesforce "System" namespace doesn't play by it's own rules.   It can either return a `List<SObject>` or a single `SObject`.  No Casting required.
