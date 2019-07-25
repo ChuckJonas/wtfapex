@@ -74,9 +74,6 @@ And Overrides:
 
 ```java
 public class BeesException extends Exception{
-    public BeesException(String message, Boolean noop){
-        this.setMessage(message);
-    }
     public void setMessage(String message){
         super.setMessage(message);
     }
@@ -85,9 +82,6 @@ public class BeesException extends Exception{
 
 
 public class BeesException extends Exception{
-    public BeesException(String message, Boolean noop){
-        this.setMessage(message);
-    }
     public override void setMessage(String message){
         super.setMessage(message);
     }
