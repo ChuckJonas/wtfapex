@@ -14,6 +14,7 @@ if(b!=false) system.debug(‘b is not false’);
 
 See [Advanced Apex Programming in Salesforce](http://advancedapex.com/2012/08/23/funwithbooleans/) for explination.
 
+
 ### String compare is Case-insenstive (except when it's not) 
 
 ``` apex
@@ -42,13 +43,29 @@ Running `Database.query('foo')` will call our new class (essentially override th
 
 [source](https://twitter.com/FishOfPrey/status/1013530412121915392)
 
+### "Phantom" Inner Class Type Equivalency 
+
+```java
+public class IExist{}
+System.assertEquals(IExist.class, IExist.IDont.Class); //passes
+```
+
+Source: [Kevin Jones](https://twitter.com/nawforce/status/1154135982280597504)
+
 ### System can have ambiguous returns types
 
 `Database.query` is one of many cases where the salesforce "System" namespace doesn't play by it's own rules.   It can either return a `List<SObject>` or a single `SObject`.  No Casting required.
 
-Try writing your own method to dot this and you'll get a error: 
+```java
+Foo__c foo = Database.Query('SELECT Id FROM Foo__c');
+List<Foo__c> foos = Database.Query('SELECT Id FROM Foo__c');
+```
+
+Try writing your own method to do this and you'll get a error: 
 
 > Method already defined: query SObject Database.query(String) from the type Database (7:27)
+
+You can overload arguments, but not `return` type.
 
 ### Fun with Hashcodes
 
