@@ -70,25 +70,6 @@ public class BeesException extends Exception{
 //fails: System exception constructor already defined: <Constructor>()
 ```
 
-And Overrides:
-
-```java
-public class BeesException extends Exception{
-    public void setMessage(String message){
-        super.setMessage(message);
-    }
-}
-//fails: BeesException: Method must use the override keyword: void setMessage(String)
-
-
-public class BeesException extends Exception{
-    public override void setMessage(String message){
-        super.setMessage(message);
-    }
-}
-//fails: Object has no superclass for super invocation
-```
-
 [For Explination see](https://www.ca-peterson.com/2015/01/23/leaky_abstractions_apex_exception_types/)
 
 ### System can have ambiguous returns types
