@@ -87,6 +87,20 @@ Try writing your own method to do this and you'll get a error:
 
 You can overload arguments, but not `return` type.
 
+### Local Scope Leak
+
+If you write an If/Else without braces, symbols scoped in the "if" seem to leak into the "else":
+
+``` java
+if(false)
+   String a = 'Never going to happen.';
+else
+   a = 'I should not compile';
+```
+Worth noting that Java won't even allow you to declare a block scoped variable inside a "braceless IF" as it can never be referenced elsewhere.
+
+Source: [Kevin Jones](https://twitter.com/nawforce/status/1180936132491657224)
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
