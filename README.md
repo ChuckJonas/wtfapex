@@ -2,7 +2,7 @@
 
 > A list of funny and tricky Apex examples
 
-Inspired by [wtfjs](https://github.com/denysdovhan/wtfjs)
+***Inspired by [wtfjs](https://github.com/denysdovhan/wtfjs)***
 
 ### When a boolean is not a boolean
 
@@ -23,7 +23,7 @@ String y = 'abc';
 System.assert(x == y); // passes
 System.assertEquals(x, y); // fails
 ```
-[Explanation](https://salesforce.stackexchange.com/questions/80456/is-there-any-difference-in-equals-and-for-string-variables)
+See [explanation on StackExchange](https://salesforce.stackexchange.com/questions/80456/is-there-any-difference-in-equals-and-for-string-variables)
 
 ### Shadowing System (global) classes
 
@@ -38,7 +38,7 @@ public class Database {
 }
 ```
 
-Running `Database.query('foo')` will call our new class (essentially override the [Database methods](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_dynamic_soql.htm))!?
+Running `Database.query('foo')` will call our new class (essentially overriding the [Database methods](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_dynamic_soql.htm))!?
 
 
 [source](https://twitter.com/FishOfPrey/status/1013530412121915392)
@@ -101,9 +101,9 @@ Worth noting that Java won't even allow you to declare a block scoped variable i
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1180936132491657224)
 
-### Broken type inference for `Iterable<>`
+### Broken type inference for `Set<>`
 
-Lets look at the standard `Set` class for example...
+Let's take a look at the standard `Set` class...
 
 It can be iterated in a foreach loop:
 
@@ -126,8 +126,6 @@ Except... It actually does:
 ``` java
 String.join((Iterable<String>) mySet, ','); // this works!?
 ```
-
-You'll find the same behavior with "Custom Iterables".
 
 ### Fun with Hashcodes
 
