@@ -40,6 +40,15 @@ public class Database {
 
 Running `Database.query('foo')` will call our new class (essentially overriding the [Database methods](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_dynamic_soql.htm))!?
 
+The same principle also applies to standard SObjects: 
+
+```
+public class Account { }
+
+Account acc = new Account();
+acc.AccountNumber = '123'; // Variable does not exist: AccountNumber
+```
+
 
 [source](https://twitter.com/FishOfPrey/status/1013530412121915392)
 
