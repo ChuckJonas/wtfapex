@@ -87,6 +87,38 @@ Try writing your own method to do this and you'll get an error:
 
 You can overload arguments, but not `return` type.
 
+### Local Scope Leak
+
+If you write an If/Else without braces, symbols scoped in the "if" seem to leak into the "else":
+
+``` java
+if(false)
+   String a = 'Never going to happen.';
+else
+   a = 'I should not compile';
+```
+Worth noting that Java won't even allow you to declare a block scoped variable inside a "braceless IF" as it can never be referenced elsewhere.
+
+Source: [Kevin Jones](https://twitter.com/nawforce/status/1180936132491657224)
+
+### Phantom Interface
+
+A Set can be iterated in a for loop:
+
+``` java
+Set<String> mySet = new Set<String>{'a', 'b'};
+for(String s : mySet){}
+```
+
+But it doesn't implement the Iterable interface:
+
+``` java
+String.join(mySet, ',');
+/// fails because Set doesn't implement Iterable
+String.join((Iterable<String>) mySet, ',');
+/// or does it? This cast succeeds!
+```
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
