@@ -61,7 +61,7 @@ public class OhGodBees extends Exception{}
 //fails: OhGodBees: Classes extending Exception must have a name ending in 'Exception'
 ```
 
-Constructors:
+and their Constructors:
 
 ```java
 public class BeesException extends Exception{
@@ -153,7 +153,7 @@ Meaning the following cannot be parsed or generated using `JSON.deserialize` or 
 
 ### Generics (parameterized interfaces) exist, but you can't use them
 
-Apparently, once upon a time, generics were part of Apex. However, they have since been removed (with the exception of system classes (`List<>`, `Batchable<>`, etc).  
+Once upon a time, generics were actually part of Apex. However, they have since been removed (with the exception of system classes (`List<>`, `Batchable<>`, etc).  
 
 Why would you want generics when your OS has perfectly good Copy & Paste functionality built right into it?
 
@@ -170,7 +170,7 @@ ImAbstract orAmI = (ImAbstract) JSON.deserialize('{"foo":"bar"}', ImAbstract.cla
 System.debug(orAmI.foo);
 ```
 
-[source](https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1)
+See [Stack Exchange Post](https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1)
 
 ### Polymorphic Primatives
 
@@ -184,16 +184,16 @@ System.debug(x instanceOf Decimal); // true
 
 Source [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1051965154454265856)
 
-
 ## Since Fixed
 
-Thankfully these WTFs have since been fixed by Salesforce.  We'll keep them documented for historical purposes (and entertainment).
+Thankfully, these WTFs have since been fixed by Salesforce.  We'll keep them documented for historical purposes (and entertainment).
 
 ### Mutating Datetimes
 
 https://twitter.com/FishOfPrey/status/869381316105588736
 
 ### More hashcode fun
+
 https://twitter.com/FishOfPrey/status/1016821563675459585
 
 https://salesforce.stackexchange.com/questions/224490/bug-in-list-contains-for-id-data-type
