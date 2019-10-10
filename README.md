@@ -101,6 +101,24 @@ Worth noting that Java won't even allow you to declare a block scoped variable i
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1180936132491657224)
 
+### Phantom Interface
+
+A Set can be iterated in a for loop:
+
+``` java
+Set<String> mySet = new Set<String>{'a', 'b'};
+for(String s : mySet){}
+```
+
+But it doesn't implement the Iterable interface:
+
+``` java
+String.join(mySet, ',');
+/// fails because Set doesn't implement Iterable
+String.join((Iterable<String>) mySet, ',');
+/// or does it? This cast succeeds!
+```
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
