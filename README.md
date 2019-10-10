@@ -96,6 +96,30 @@ Try writing your own method to do this and you'll get an error:
 
 You can overload arguments, but not `return` type.
 
+### Odd List Initialization bug
+
+The initialization sytax for `List<T>` expects `T ... args`.
+
+So obviously, if you passed a `List<T>` into it, you will get compile error:
+
+``` java
+List<Task>{new List<Task>()}; // Initial expression is of incorrect type, expected: Task but was: List<Task>
+``` 
+
+Expect, if List comes from `new Map<Id,T>().values()`... 
+
+The following code compiles without issue!
+
+``` java
+new List<Task>{new Map<Id,Task>().values()};
+```
+
+To add to the perplexity, when executed you will recieve the following runtime error:
+
+> System.QueryException: List has no rows for assignment to SObject
+
+Source: Matt Bingham 
+
 ### Local Scope Leak
 
 If you write an If/Else without braces, symbols scoped in the "if" seem to leak into the "else":
