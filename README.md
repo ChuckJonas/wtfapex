@@ -127,6 +127,8 @@ Except... It actually does:
 String.join((Iterable<String>) mySet, ','); // this works!?
 ```
 
+[Vote to fix this](https://success.salesforce.com/ideaView?id=08730000000kxLyAAI)
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
