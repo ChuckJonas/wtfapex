@@ -101,23 +101,33 @@ Worth noting that Java won't even allow you to declare a block scoped variable i
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1180936132491657224)
 
-### Phantom Interface
+### Broken type inference for `Iterable<>`
 
-A Set can be iterated in a for loop:
+Lets look at the standard `Set` class for example...
+
+It can be iterated in a foreach loop:
 
 ``` java
 Set<String> mySet = new Set<String>{'a', 'b'};
 for(String s : mySet){}
 ```
 
-But it doesn't implement the Iterable interface:
+But, according to Salesforce (compiler & runtime), it does not actually implement the `Iterable` interface:
 
 ``` java
-String.join(mySet, ',');
-/// fails because Set doesn't implement Iterable
-String.join((Iterable<String>) mySet, ',');
-/// or does it? This cast succeeds!
+String.join(mySet, ','); // Doesn't compile! "Method does not exist or incorrect signature: void join(Set<String>, String)..."
+
+// Just to make sure, lets check at runtime..
+System.assert(mySet instanceof Iterable<String>);  // Yup, this fails! I guess Set really isn't an Iterable...
 ```
+
+Except... It actually does:
+
+``` java
+String.join((Iterable<String>) mySet, ','); // this works!?
+```
+
+You'll find the same behavior with "Custom Iterables".
 
 ### Fun with Hashcodes
 
