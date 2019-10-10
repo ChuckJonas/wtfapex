@@ -106,7 +106,7 @@ So obviously, if you passed a `List<T>` into it, you will get compile error:
 List<Task>{new List<Task>()}; // Initial expression is of incorrect type, expected: Task but was: List<Task>
 ``` 
 
-Expect, if List comes from `new Map<Id,T>().values()`... 
+Except, if List comes from `new Map<Id,T>().values()`... 
 
 The following code compiles without issue!
 
