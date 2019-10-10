@@ -42,7 +42,7 @@ Running `Database.query('foo')` will call our new class (essentially overriding 
 
 The same principle also applies to standard SObjects: 
 
-```
+``` java
 public class Account { }
 
 Account acc = new Account();
@@ -50,7 +50,7 @@ acc.AccountNumber = '123'; // Variable does not exist: AccountNumber
 ```
 
 
-[source](https://twitter.com/FishOfPrey/status/1013530412121915392)
+Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1013530412121915392)
 
 ### "Phantom" Inner Class Type Equivalency 
 
@@ -191,7 +191,7 @@ System.debug(x instanceOf Double);  // true
 System.debug(x instanceOf Decimal); // true
 ```
 
-Source [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1051965154454265856)
+Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1051965154454265856)
 
 ## Since Fixed
 
