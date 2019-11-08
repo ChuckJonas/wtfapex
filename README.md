@@ -217,6 +217,20 @@ System.debug(x instanceOf Decimal); // true
 
 Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1051965154454265856)
 
+## Invalid HTTP method: PATCH
+
+When you try this:
+
+``` java
+Http h = new Http();
+HttpRequest req = new HttpRequest();
+req.setEndpoint('hooli.com');
+req.setMethod('PATCH');
+HttpResponse res = h.send(req);
+```
+
+[There is a workaround](https://salesforce.stackexchange.com/questions/57215/how-can-i-make-a-patch-http-callout-from-apex), but only supported by some servers.
+
 ## Since Fixed
 
 Thankfully, these WTFs have since been fixed by Salesforce.  We'll keep them documented for historical purposes (and entertainment).
