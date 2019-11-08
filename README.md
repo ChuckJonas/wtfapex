@@ -217,7 +217,7 @@ System.debug(x instanceOf Decimal); // true
 
 Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1051965154454265856)
 
-## Invalid HTTP method: PATCH
+### Invalid HTTP method: PATCH
 
 When you try this:
 
