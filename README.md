@@ -192,19 +192,6 @@ Why would you want generics when your OS has perfectly good Copy & Paste functio
 
 [Vote for Generics](https://success.salesforce.com/ideaView?id=08730000000aDnYAAU)
 
-### Initializing Abstract Classes
-
-``` apex
-public abstract class ImAbstract {
-    public String foo;
-}
-
-ImAbstract orAmI = (ImAbstract) JSON.deserialize('{"foo":"bar"}', ImAbstract.class);
-System.debug(orAmI.foo);
-```
-
-See [Stack Exchange Post](https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1)
-
 ### Polymorphic Primatives
 
 ``` apex
@@ -231,7 +218,7 @@ HttpResponse res = h.send(req);
 
 [There is a workaround](https://salesforce.stackexchange.com/questions/57215/how-can-i-make-a-patch-http-callout-from-apex), but only supported by some servers.
 
-## Since Fixed
+# Since Fixed
 
 Thankfully, these WTFs have since been fixed by Salesforce.  We'll keep them documented for historical purposes (and entertainment).
 
@@ -244,3 +231,18 @@ https://twitter.com/FishOfPrey/status/869381316105588736
 https://twitter.com/FishOfPrey/status/1016821563675459585
 
 https://salesforce.stackexchange.com/questions/224490/bug-in-list-contains-for-id-data-type
+
+### Initializing Abstract Classes
+
+Resolved in Spring '20 by the "_Restrict Reflective Access to Non-Global Controller Constructors in Packages_" Critical Update
+
+``` apex
+public abstract class ImAbstract {
+    public String foo;
+}
+
+ImAbstract orAmI = (ImAbstract) JSON.deserialize('{"foo":"bar"}', ImAbstract.class);
+System.debug(orAmI.foo);
+```
+
+See [Stack Exchange Post](https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1)
