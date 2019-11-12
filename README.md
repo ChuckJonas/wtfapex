@@ -10,6 +10,7 @@
 Boolean b;
 if(b!=true) system.debug('b is not true');
 if(b!=false) system.debug('b is not false');
+if(b) //throws NPE exception
 ```
 
 See [Advanced Apex Programming in Salesforce](http://advancedapex.com/2012/08/23/funwithbooleans/) for explanation.
