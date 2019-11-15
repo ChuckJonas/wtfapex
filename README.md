@@ -62,6 +62,19 @@ System.assertEquals(IExist.class, IExist.IDont.Class); //passes
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1154135982280597504)
 
+### Fulfilling Interface Contracts with Static Methods
+
+This shouldn't work but it does.  Apperently also works with batch.
+
+```
+public class StaticsAreCool implements Schedulable{
+   public static void execute(SchedulableContext sc){
+   }
+}
+```
+
+Source: [Kevin Jones](https://twitter.com/nawforce/status/1195419601737265152)
+
 ### Exceptions are "exceptional"
 
 In their naming conventions:
