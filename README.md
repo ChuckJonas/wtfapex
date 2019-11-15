@@ -66,7 +66,7 @@ Source: [Kevin Jones](https://twitter.com/nawforce/status/1154135982280597504)
 
 This shouldn't work but it does.  Apperently also works with batch.
 
-```
+``` java
 public class StaticsAreCool implements Schedulable{
    public static void execute(SchedulableContext sc){
    }
