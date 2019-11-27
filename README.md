@@ -178,26 +178,29 @@ String.join((Iterable<String>) mySet, ','); // this works!?
 
 ### String.Format with single quotes
 
-The following code:
 
 ``` java
-System.debug(String.format(
-  'SELECT Name FROM Account WHERE ID = \'{0}\'',
-  new List<String>{'abc123'}
-));
+String who = 'World';
+String msg = String.format(
+     'Hello, \'{0}\'',
+     new List<String>{who}
+);
+System.assert(msg.contains(who)); //fails
 ```
 
-Outputs: `SELECT Name FROM Account WHERE ID = {0}`
+This unexpectedly outputs `Hello, {0}`
 
 🤔
 
 To get this to work properly you must escape *two* single quotes:
 
 ``` java
-System.debug(String.format(
-  'SELECT Name FROM Account WHERE ID = \'\'{0}\'\'',
-  new List<String>{'abc123'}
-));
+String who = 'World';
+String msg = String.format(
+     'Hello, \'\'{0}\'\'',
+     new List<String>{who}
+);
+System.assert(msg.contains(who)); //passes
 ```
 
 [Explanation by Daniel Ballinger](https://developer.salesforce.com/forums/?id=906F00000008yzsIAA)
