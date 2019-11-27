@@ -176,6 +176,32 @@ String.join((Iterable<String>) mySet, ','); // this works!?
 
 [Vote to fix this](https://success.salesforce.com/ideaView?id=08730000000kxLyAAI)
 
+### String.Format with single quotes
+
+The following code:
+
+``` java
+System.debug(String.format(
+  'SELECT Name FROM Account WHERE ID = \'{0}\'',
+  new List<String>{'abc123'}
+));
+```
+
+Outputs: `SELECT Name FROM Account WHERE ID = {0}`
+
+🤔
+
+To get this to work properly you must escape *two* single quotes:
+
+``` java
+System.debug(String.format(
+  'SELECT Name FROM Account WHERE ID = \'\'{0}\'\'',
+  new List<String>{'abc123'}
+));
+```
+
+[Explanation by Daniel Ballinger](https://developer.salesforce.com/forums/?id=906F00000008yzsIAA)
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
