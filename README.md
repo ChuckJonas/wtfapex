@@ -232,6 +232,8 @@ This code will error out with the following message:
 
 > Variable does not exist: OrderBuilder
 
+Source: [Leo Alves](https://twitter.com/leofilipealves)
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
