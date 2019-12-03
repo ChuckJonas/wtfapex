@@ -205,7 +205,7 @@ System.assert(msg.contains(who)); //passes
 
 [Explanation by Daniel Ballinger](https://developer.salesforce.com/forums/?id=906F00000008yzsIAA)
 
-### Line continuation breaks for static
+### Line continuation breaks for static method
 
 In apex, all statements must be terminated by a `;`.  This allows statements to span multiple lines:
 
