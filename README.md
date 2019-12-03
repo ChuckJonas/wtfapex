@@ -205,6 +205,33 @@ System.assert(msg.contains(who)); //passes
 
 [Explanation by Daniel Ballinger](https://developer.salesforce.com/forums/?id=906F00000008yzsIAA)
 
+### Line continuation breaks for static
+
+In apex, all statements must be terminated by a `;`.  This allows statements to span multiple lines:
+
+``` java
+Order o = new OrderBuilder()
+  .addLineItem('foo', 5)
+  .addLineItem('bar', 10)
+  .setDiscount(0.5)
+  .toOrder();
+```
+
+However, for some reason if the method is static, apex doesn't let it span a newline:
+
+``` java
+Order o = OrderBuilder
+  .newInstance() //static
+  .addLineItem('foo', 5)
+  .addLineItem('bar', 10)
+  .setDiscount(0.5)
+  .toOrder();
+```
+ 
+This code will error out with the following message:
+
+> Variable does not exist: OrderBuilder
+
 ### Fun with Hashcodes
 
 [Enums in batch](https://salesforce.stackexchange.com/questions/158557/enums-as-map-keys-dont-work-in-batchable)
