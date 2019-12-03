@@ -1,72 +1,137 @@
-# What the f*ck, Apex?
+# What the f\*ck, Apex?
 
 > A list of funny and tricky Apex examples
 
-***Inspired by [wtfjs](https://github.com/denysdovhan/wtfjs)***
+**_Inspired by [wtfjs](https://github.com/denysdovhan/wtfjs)_**
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+## 📖Table of Contents
+
+- [✍🏻 Notation](#-notation)
+- [👀Examples](#examples)
+  - [When a boolean is not a boolean](#when-a-boolean-is-not-a-boolean)
+  - [String compare is case-insensitive (except when it's not)](#string-compare-is-case-insensitive-except-when-its-not)
+  - [Shadowing System (global) classes](#shadowing-system-global-classes)
+  - ["Phantom" Inner Class Type Equivalency](#phantom-inner-class-type-equivalency)
+  - [Fulfilling Interface Contracts with Static Methods](#fulfilling-interface-contracts-with-static-methods)
+  - [Exceptions are "exceptional"](#exceptions-are-exceptional)
+  - [`System` can have ambiguous return types](#system-can-have-ambiguous-return-types)
+  - [Odd List Initialization bug](#odd-list-initialization-bug)
+  - [Local Scope Leak](#local-scope-leak)
+  - [Broken type inference for `Set<>`](#broken-type-inference-for-set)
+  - [String.Format with single quotes](#stringformat-with-single-quotes)
+  - [Line continuation breaks for static method](#line-continuation-breaks-for-static-method)
+  - [Fun with Hashcodes](#fun-with-hashcodes)
+  - [JSON Serialization](#json-serialization)
+  - [Generics (parameterized interfaces) exist, but you can't use them](#generics-parameterized-interfaces-exist-but-you-cant-use-them)
+  - [Polymorphic Primitives](#polymorphic-primitives)
+  - [Invalid HTTP method: PATCH](#invalid-http-method-patch)
+- [🔧 Since Fixed](#-since-fixed)
+  - [Mutating Datetimes](#mutating-datetimes)
+  - [More hashcode fun](#more-hashcode-fun)
+  - [Initializing Abstract Classes](#initializing-abstract-classes)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## ✍🏻 Notation
+
+**`// ->`** is used to show the result of an expression. For example:
+
+```java
+1 + 1; // -> 2
+```
+
+**`// >`** means the result of `console.log` or another output. For example:
+
+```java
+System.debug('hello, world!'); // > hello, world!
+```
+
+**`// !`** Means a runtime exception was thrown:
+
+```java
+Decimal d = 1 / 0; // ! Divide by 0
+```
+
+**`// ~`** Code fails to compile:
+
+```java
+Decimal d = 'foo'; // ~ Illegal assignment from String to Decimal
+```
+
+**`//`** is just a comment used for explanations. Example:
+
+```java
+// Assigning a function to foo constant
+Foo foo = new Foo();
+```
+
+## 👀Examples
 
 ### When a boolean is not a boolean
 
-``` apex
+```apex
 Boolean b;
-if(b!=true) system.debug('b is not true');
-if(b!=false) system.debug('b is not false');
-if(b){} //throws NPE exception
+if(b!=true) system.debug('b is not true');   // > b is not true
+if(b!=false) system.debug('b is not false'); // > b is not false
+if(b){}                                      // ! Attempt to de-reference a null object
 ```
 
 See [Advanced Apex Programming in Salesforce](http://advancedapex.com/2012/08/23/funwithbooleans/) for explanation.
 
+### String compare is case-insensitive (except when it's not)
 
-### String compare is case-insensitive (except when it's not) 
-
-``` apex
+```java
 String x = 'Abc';
 String y = 'abc';
-System.assert(x == y); // passes
-System.assertEquals(x, y); // fails
+System.assert(x == y);
+System.assertEquals(x, y); // ! Expected: Abc, Actual: abc
 ```
+
 See [explanation on StackExchange](https://salesforce.stackexchange.com/questions/80456/is-there-any-difference-in-equals-and-for-string-variables)
 
 ### Shadowing System (global) classes
 
 Nothing prevents you from recreating a class with the same name of one that exists in the `System` (default) namespace.
 
-``` apex
+```java
 public class Database {
-    public static List<sObject> query(String qry){
-        System.debug(qry);
-        return null;
-    }
+  public static List<sObject> query(String qry) {
+    System.debug(qry);
+    return null;
+  }
 }
 ```
 
 Running `Database.query('foo')` will call our new class (essentially overriding the [Database methods](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_dynamic_soql.htm))!?
 
-The same principle also applies to standard SObjects: 
+The same principle also applies to standard SObjects:
 
-``` java
+```java
 public class Account { }
 
 Account acc = new Account();
-acc.AccountNumber = '123'; // Variable does not exist: AccountNumber
+acc.AccountNumber = '123'; // ! Variable does not exist: AccountNumber
 ```
-
 
 Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1013530412121915392)
 
-### "Phantom" Inner Class Type Equivalency 
+### "Phantom" Inner Class Type Equivalency
 
 ```java
 public class IExist{}
-System.assertEquals(IExist.class, IExist.IDont.Class); //passes
+System.assertEquals(IExist.class, IExist.IDont.Class); // -> passes
 ```
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1154135982280597504)
 
 ### Fulfilling Interface Contracts with Static Methods
 
-This shouldn't work but it does.  Apperently also works with batch.
+This shouldn't work but it does. Apparently also works with batch.
 
-``` java
+```java
 public class StaticsAreCool implements Schedulable{
    public static void execute(SchedulableContext sc){
    }
@@ -81,7 +146,7 @@ In their naming conventions:
 
 ```java
 public class OhGodBees extends Exception{}
-//fails: OhGodBees: Classes extending Exception must have a name ending in 'Exception'
+// ~ Classes extending Exception must have a name ending in 'Exception'
 ```
 
 and their Constructors:
@@ -90,21 +155,21 @@ and their Constructors:
 public class BeesException extends Exception{
     public BeesException(){}
 }
-//fails: System exception constructor already defined: <Constructor>()
+// ~ System exception constructor already defined: <Constructor>()
 ```
 
 For explanation and further interesting observations, [see Chris Peterson's blog post.](https://www.ca-peterson.com/2015/01/23/leaky_abstractions_apex_exception_types/)
 
 ### `System` can have ambiguous return types
 
-`Database.query` is one of many cases where the Salesforce `System` namespace doesn't play by its own rules. It can return either a `List<SObject>` or a single `SObject`.  No casting required.
+`Database.query` is one of many cases where the Salesforce `System` namespace doesn't play by its own rules. It can return either a `List<SObject>` or a single `SObject`. No casting required.
 
 ```java
 Foo__c foo = Database.Query('SELECT Id FROM Foo__c');
 List<Foo__c> foos = Database.Query('SELECT Id FROM Foo__c');
 ```
 
-Try writing your own method to do this and you'll get an error: 
+Try writing your own method to do this and you'll get an error:
 
 > Method already defined: query SObject Database.query(String) from the type Database (7:27)
 
@@ -112,38 +177,39 @@ You can overload arguments, but not `return` type.
 
 ### Odd List Initialization bug
 
-The initialization sytax for `List<T>` expects `T ... args`.
+The initialization syntax for `List<T>` expects `T ... args`.
 
 So obviously, if you passed a `List<T>` into it, you will get compile error:
 
-``` java
-List<Task>{new List<Task>()}; // Initial expression is of incorrect type, expected: Task but was: List<Task>
-``` 
+```java
+List<Task>{new List<Task>()}; // ~ Initial expression is of incorrect type, expected: Task but was: List<Task>
+```
 
-Except, if List comes from `new Map<Id,T>().values()`... 
+Except, if List comes from `new Map<Id,T>().values()`...
 
 The following code compiles without issue!
 
-``` java
+```java
 new List<Task>{new Map<Id,Task>().values()};
 ```
 
-To add to the perplexity, when executed you will recieve the following runtime error:
+To add to the perplexity, when executed you will receive the following runtime error:
 
 > System.QueryException: List has no rows for assignment to SObject
 
-Source: Matt Bingham 
+Source: Matt Bingham
 
 ### Local Scope Leak
 
 If you write an If/Else without braces, symbols scoped in the "if" seem to leak into the "else":
 
-``` java
+```java
 if(false)
    String a = 'Never going to happen.';
 else
    a = 'I should not compile';
 ```
+
 Worth noting that Java won't even allow you to declare a block scoped variable inside a "braceless IF" as it can never be referenced elsewhere.
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1180936132491657224)
@@ -154,23 +220,23 @@ Let's take a look at the standard `Set` class...
 
 It can be iterated in a foreach loop:
 
-``` java
+```java
 Set<String> mySet = new Set<String>{'a', 'b'};
 for(String s : mySet){}
 ```
 
 But, according to Salesforce (compiler & runtime), it does not actually implement the `Iterable` interface:
 
-``` java
-String.join(mySet, ','); // Doesn't compile! "Method does not exist or incorrect signature: void join(Set<String>, String)..."
+```java
+String.join(mySet, ','); // ~ "Method does not exist or incorrect signature: void join(Set<String>, String)..."
 
 // Just to make sure, lets check at runtime..
-System.assert(mySet instanceof Iterable<String>);  // Yup, this fails! I guess Set really isn't an Iterable...
+System.debug(mySet instanceof Iterable<String>);  // > false
 ```
 
 Except... It actually does:
 
-``` java
+```java
 String.join((Iterable<String>) mySet, ','); // this works!?
 ```
 
@@ -178,38 +244,37 @@ String.join((Iterable<String>) mySet, ','); // this works!?
 
 ### String.Format with single quotes
 
-
-``` java
+```java
 String who = 'World';
 String msg = String.format(
      'Hello, \'{0}\'',
      new List<String>{who}
 );
-System.assert(msg.contains(who)); //fails
+System.assert(msg.contains(who)); // ! assertion failed
 ```
 
-This unexpectedly outputs `Hello, {0}`
+Unexpectedly, `msg` is set to `Hello, {0}`
 
 🤔
 
-To get this to work properly you must escape *two* single quotes:
+To get this to work properly you must escape _two_ single quotes:
 
-``` java
+```java
 String who = 'World';
 String msg = String.format(
      'Hello, \'\'{0}\'\'',
      new List<String>{who}
 );
-System.assert(msg.contains(who)); //passes
+System.assert(msg.contains(who)); // -> passes
 ```
 
 [Explanation by Daniel Ballinger](https://developer.salesforce.com/forums/?id=906F00000008yzsIAA)
 
 ### Line continuation breaks for static method
 
-In apex, all statements must be terminated by a `;`.  This allows statements to span multiple lines:
+In apex, all statements must be terminated by a `;`. This allows statements to span multiple lines:
 
-``` java
+```java
 Order o = new OrderBuilder()
   .addLineItem('foo', 5)
   .addLineItem('bar', 10)
@@ -219,18 +284,14 @@ Order o = new OrderBuilder()
 
 However, for some reason if the method is static, apex doesn't let it span a newline:
 
-``` java
+```java
 Order o = OrderBuilder
-  .newInstance() //static
+  .newInstance() // ~ Variable does not exist: OrderBuilder
   .addLineItem('foo', 5)
   .addLineItem('bar', 10)
   .setDiscount(0.5)
   .toOrder();
 ```
- 
-This code will error out with the following message:
-
-> Variable does not exist: OrderBuilder
 
 Source: [Leo Alves](https://twitter.com/leofilipealves)
 
@@ -247,10 +308,10 @@ Source: [Leo Alves](https://twitter.com/leofilipealves)
 
 Meaning the following cannot be parsed or generated using `JSON.deserialize` or `JSON.serialize`:
 
-``` json
+```json
 {
-   "msg": "hello dingus",
-   "from": "Dr. Dingus"
+  "msg": "hello dingus",
+  "from": "Dr. Dingus"
 }
 ```
 
@@ -258,20 +319,20 @@ Meaning the following cannot be parsed or generated using `JSON.deserialize` or 
 
 ### Generics (parameterized interfaces) exist, but you can't use them
 
-Once upon a time, generics were actually part of Apex. However, they have since been removed (with the exception of system classes (`List<>`, `Batchable<>`, etc).  
+Once upon a time, generics were actually part of Apex. However, they have since been removed (with the exception of system classes (`List<>`, `Batchable<>`, etc).
 
 Why would you want generics when your OS has perfectly good Copy & Paste functionality built right into it?
 
 [Vote for Generics](https://success.salesforce.com/ideaView?id=08730000000aDnYAAU)
 
-### Polymorphic Primatives
+### Polymorphic Primitives
 
-``` apex
+```apex
 Object x = 42;
-System.debug(x instanceOf Integer); // true
-System.debug(x instanceOf Long);  // true
-System.debug(x instanceOf Double);  // true
-System.debug(x instanceOf Decimal); // true
+System.debug(x instanceOf Integer); // > true
+System.debug(x instanceOf Long);    // > true
+System.debug(x instanceOf Double);  // > true
+System.debug(x instanceOf Decimal); // > true
 ```
 
 Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/1051965154454265856)
@@ -280,19 +341,19 @@ Source: [Daniel Ballinger](https://twitter.com/FishOfPrey/status/105196515445426
 
 When you try this:
 
-``` java
+```java
 Http h = new Http();
 HttpRequest req = new HttpRequest();
 req.setEndpoint('hooli.com');
 req.setMethod('PATCH');
-HttpResponse res = h.send(req);
+HttpResponse res = h.send(req); // ! Invalid HTTP method: PATCH
 ```
 
 [There is a workaround](https://salesforce.stackexchange.com/questions/57215/how-can-i-make-a-patch-http-callout-from-apex), but only supported by some servers.
 
-# Since Fixed
+## 🔧 Since Fixed
 
-Thankfully, these WTFs have since been fixed by Salesforce.  We'll keep them documented for historical purposes (and entertainment).
+Thankfully, these WTF's have since been fixed by Salesforce. We'll keep them documented for historical purposes (and entertainment).
 
 ### Mutating Datetimes
 
@@ -308,13 +369,13 @@ https://salesforce.stackexchange.com/questions/224490/bug-in-list-contains-for-i
 
 Resolved in Spring '20 by the "_Restrict Reflective Access to Non-Global Controller Constructors in Packages_" Critical Update
 
-``` apex
+```java
 public abstract class ImAbstract {
     public String foo;
 }
 
 ImAbstract orAmI = (ImAbstract) JSON.deserialize('{"foo":"bar"}', ImAbstract.class);
-System.debug(orAmI.foo);
+System.debug(orAmI.foo); // > bar
 ```
 
 See [Stack Exchange Post](https://salesforce.stackexchange.com/questions/250184/can-create-an-instance-of-abstract-class-salesforce-bug?atw=1)

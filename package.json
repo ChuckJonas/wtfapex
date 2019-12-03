@@ -1,0 +1,22 @@
+{
+  "name": "wtfapex",
+  "version": "1.0.0",
+  "description": "> A list of funny and tricky Apex examples",
+  "main": "index.js",
+  "scripts": {
+    "toc": "npx doctoc --github --title '## 📖Table of Contents' --maxlevel 3 README.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChuckJonas/wtfapex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChuckJonas/wtfapex/issues"
+  },
+  "homepage": "https://github.com/ChuckJonas/wtfapex#readme",
+  "devDependencies": {
+    "doctoc": "^1.4.0"
+  }
+}
