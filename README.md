@@ -43,7 +43,7 @@
 1 + 1; // -> 2
 ```
 
-**`// >`** means the result of `console.log` or another output. For example:
+**`// >`** means the result of `System.debug` or another output. For example:
 
 ```java
 System.debug('hello, world!'); // > hello, world!
@@ -158,15 +158,17 @@ Apparently this is a [known issue and it has been fixed](https://success.salesfo
 
 #### 15 Char Id's don't work
 
-2. Salesforce seems to automatically convert 15 character Id's to 18.  While equivalency works as expected in most cases:
+Behind the scenes Salesforce seems to always convert 15 character Id's to 18.  
+
+While equivalency works as expected in most cases:
 
 ```java
 Id a15 = '0012F00000YIc48';
 Id a18 = '0012F00000YIc48QAD';
-System.debug(a15 == a18); // -> true
+System.assert(a15 == a18);
 ```
 
-For the List `contains` & `indexOf` methods, it doesn't:
+However, for the List `contains` & `indexOf` methods, it doesn't:
 
 ```java
 List<Id> idList = new List<Id>{
@@ -175,7 +177,8 @@ List<Id> idList = new List<Id>{
    '0012F00000YIc49'
 };
 System.debug(idList); //-> (0012F00000YIc46QAD, 0012F00000YIc48QAD, 0012F00000YIc49QAD)
-System.debug(idList.indexOf('0012F00000YIc48')); //-> -1
+System.debug(idList.indexOf('0012F00000YIc48')); // > -1
+System.debug(idList.contains('0012F00000YIc48')); // > false
 ```
 You can avoid this by first assigning the value you are checking to an `Id` type.
 
