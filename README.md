@@ -127,6 +127,58 @@ System.assertEquals(IExist.class, IExist.IDont.Class); // -> passes
 
 Source: [Kevin Jones](https://twitter.com/nawforce/status/1154135982280597504)
 
+### List<Id> `contains` & `indexOf` is broken
+
+#### "Apex Log level" influences behavior
+
+The easiest way to test this is by writing the output to an object field.  
+
+1. Replace `accId` with a dummy account
+2. Open a dev console and set the log levels to `Apex=Finest`
+3. Run the following code
+
+```java
+Id accId = '0012F00000YIc48QAD';
+Account acc = new Account(Id = accId);
+List<Id> haystack = new List<Id>();
+haystack.add('0012F00000YIc46QAD');
+haystack.add(accId);
+haystack.add('0012F00000YIc49QAD');
+String debug = 'Index: ' + haystack.indexOf(needle) + ' Contains: '   + haystack.contains(needle);
+acc.AccountNumber = debug;
+update acc;
+```
+
+4. Open the account. You should see the `AccountNumber` equals `Index: 1 Contains: true`
+5. Set log levels to `Apex=None`
+6. Run the code again
+7. Refresh the account. `AccountNumber` will now equal `Index: -1 Contains: false`
+
+Apparently this is a [known issue and it has been fixed](https://success.salesforce.com/issues_view?id=a1p3A000000AT9cQAG).  This test shows otherwise...
+
+#### 15 Char Id's don't work
+
+2. Salesforce seems to automatically convert 15 character Id's to 18.  While equivalency works as expected in most cases:
+
+```java
+Id a15 = '0012F00000YIc48';
+Id a18 = '0012F00000YIc48QAD';
+System.debug(a15 == a18); // -> true
+```
+
+For the List `contains` & `indexOf` methods, it doesn't:
+
+```java
+List<Id> idList = new List<Id>{
+   '0012F00000YIc46',
+   '0012F00000YIc48',
+   '0012F00000YIc49'
+};
+System.debug(idList); //-> (0012F00000YIc46QAD, 0012F00000YIc48QAD, 0012F00000YIc49QAD)
+System.debug(idList.indexOf('0012F00000YIc48')); //-> -1
+```
+You can avoid this by first assigning the value you are checking to an `Id` type.
+
 ### Fulfilling Interface Contracts with Static Methods
 
 This shouldn't work but it does. Apparently also works with batch.
