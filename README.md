@@ -160,7 +160,7 @@ Apparently this is a [known issue and it has been fixed](https://success.salesfo
 
 Behind the scenes Salesforce seems to always convert 15 character Id's to 18.  
 
-While equivalency works as expected in most cases:
+Equivalency works as expected in most cases:
 
 ```java
 Id a15 = '0012F00000YIc48';
