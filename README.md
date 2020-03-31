@@ -6,7 +6,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 ## 📖Table of Contents
 
 - [✍🏻 Notation](#-notation)
@@ -15,6 +14,7 @@
   - [String compare is case-insensitive (except when it's not)](#string-compare-is-case-insensitive-except-when-its-not)
   - [Shadowing System (global) classes](#shadowing-system-global-classes)
   - ["Phantom" Inner Class Type Equivalency](#phantom-inner-class-type-equivalency)
+  - [List<Id> `contains` & `indexOf` is broken](#listid-contains--indexof-is-broken)
   - [Fulfilling Interface Contracts with Static Methods](#fulfilling-interface-contracts-with-static-methods)
   - [Exceptions are "exceptional"](#exceptions-are-exceptional)
   - [`System` can have ambiguous return types](#system-can-have-ambiguous-return-types)
