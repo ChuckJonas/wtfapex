@@ -15,6 +15,7 @@
   - [Shadowing System (global) classes](#shadowing-system-global-classes)
   - ["Phantom" Inner Class Type Equivalency](#phantom-inner-class-type-equivalency)
   - [List<Id> `contains` & `indexOf` is broken](#listid-contains--indexof-is-broken)
+  - [`final` parameters "exist", but can be reassigned](#final-parameters-exist-but-can-be-reassigned)
   - [Fulfilling Interface Contracts with Static Methods](#fulfilling-interface-contracts-with-static-methods)
   - [Exceptions are "exceptional"](#exceptions-are-exceptional)
   - [`System` can have ambiguous return types](#system-can-have-ambiguous-return-types)
@@ -181,6 +182,18 @@ System.debug(idList.indexOf('0012F00000YIc48')); // > -1
 System.debug(idList.contains('0012F00000YIc48')); // > false
 ```
 You can avoid this by first assigning the value you are checking to an `Id` type.
+
+### `final` parameters "exist", but can be reassigned
+
+You won't find a reference to it in the docs, but the compiler does apparently allow [`final` parameters](https://stackoverflow.com/questions/2236599/final-keyword-in-method-parameters). However, it doesn't actually to prevent reassignment of such parameters:
+
+```java
+public void withFinalParam(final String iAmFinal){
+  iAmFinal = 'just kidding'; //compiles
+}
+```
+
+Source: [Kevin Jones](https://twitter.com/nawforce/status/1251425747320934400)
 
 ### Fulfilling Interface Contracts with Static Methods
 
