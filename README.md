@@ -12,6 +12,7 @@
 - [👀Examples](#examples)
   - [When a boolean is not a boolean](#when-a-boolean-is-not-a-boolean)
   - [String compare is case-insensitive (except when it's not)](#string-compare-is-case-insensitive-except-when-its-not)
+  - [Object `equals` override](#object-equals-override)
   - [Shadowing System (global) classes](#shadowing-system-global-classes)
   - ["Phantom" Inner Class Type Equivalency](#phantom-inner-class-type-equivalency)
   - [List<Id> `contains` & `indexOf` is broken](#listid-contains--indexof-is-broken)
@@ -92,6 +93,31 @@ System.assertEquals(x, y); // ! Expected: Abc, Actual: abc
 ```
 
 See [explanation on StackExchange](https://salesforce.stackexchange.com/questions/80456/is-there-any-difference-in-equals-and-for-string-variables)
+
+### Object `equals` override
+
+Try to `override` the `equals` method on any class and you'll be greeted with a very unexpected compile error: `@Override specified for non-overriding method`.
+
+However, just remove the `override` keyword and it compiles!
+
+At first glance it might seem like this works, but it is in fact very broken :(
+
+```java
+public class MyClass {
+    public Boolean equals(Object other) {
+        System.debug('Called my equals');
+        return false;
+    }
+}
+
+MyClass m = new MyClass();
+Object o = new MyClass();
+
+m.equals('a'); // > 'Called my equals'
+o.equals('a'); // System.debug is never called :(
+```
+
+Source: [Aidan Harding](https://salesforce.stackexchange.com/questions/339160/why-doesnt-equals-behave-like-a-virtual-method)
 
 ### Shadowing System (global) classes
 
