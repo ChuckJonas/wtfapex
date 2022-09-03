@@ -445,6 +445,22 @@ HttpResponse res = h.send(req); // ! Invalid HTTP method: PATCH
 
 [There is a workaround](https://salesforce.stackexchange.com/questions/57215/how-can-i-make-a-patch-http-callout-from-apex), but only supported by some servers.
 
+### Integers cannot be assigned the minimum Integer value
+
+Integers have a minimum possible value of -2147483648, but this value cannot be directly assigned to an Integer.
+
+```Integer totallyLegalNumber = -2147483648; // ! Illegal integer
+```
+
+The miscarriage of justice above can be avoided with the following workaround that clearly demonstrates the legality of the number:
+
+```Integer totallyLegalNumber = -2147483647;
+totallyLegalNumber--;
+System.debug(totallyLegalNumber); // > -2147483648
+```
+
+Source: [Mehdi Maujood](https://www.apexsandbox.io/problem/68)
+
 ## 🔧 Since Fixed
 
 Thankfully, these WTF's have since been fixed by Salesforce. We'll keep them documented for historical purposes (and entertainment).
