@@ -449,12 +449,14 @@ HttpResponse res = h.send(req); // ! Invalid HTTP method: PATCH
 
 Integers have a minimum possible value of -2147483648, but this value cannot be directly assigned to an Integer.
   
-```Integer totallyLegalNumber = -2147483648; // ! Illegal integer 
+```apex
+  Integer totallyLegalNumber = -2147483648; // ! Illegal integer 
 ```
   
 The miscarriage of justice above can be avoided with the following workaround that clearly demonstrates the legality of the number:
 
-```Integer totallyLegalNumber = -2147483647;
+```apex
+Integer totallyLegalNumber = -2147483647;
 totallyLegalNumber--;
 System.debug(totallyLegalNumber); // > -2147483648
 ```
