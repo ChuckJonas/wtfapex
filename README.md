@@ -445,6 +445,26 @@ HttpResponse res = h.send(req); // ! Invalid HTTP method: PATCH
 
 [There is a workaround](https://salesforce.stackexchange.com/questions/57215/how-can-i-make-a-patch-http-callout-from-apex), but only supported by some servers.
 
+### SObjectField equality check is broken
+
+The following example uses standard SObjects in Sales Cloud, but it should work with Custom Fields and/or Custom SObjects as well.
+
+When there is a lookup/master-detail relation, you can reference a child field from the parent SObject like so: `Quote.Account.Name`. This references the `Name` field of the `Account` that is referenced to a `Quote`.
+
+Running this fails, because the `Name` of an `Account` is, apparently, not the same field as the `Name` of an `Account` of a `Quote`:
+```java
+System.assertEquals(Account.Name, Quote.Account.Name);
+```
+
+But it gets worse. The following passes:
+```java
+System.assertEquals(Quote.Name, Quote.Account.Name);
+System.assertEquals(Quote.Name, Quote.Opportunity.Name);
+System.assertEquals(Quote.Name, Quote.Opportunity.Account.Name);
+```
+
+Source: [r/Salesforce](https://www.reddit.com/r/salesforce/comments/u4cp8c/is_this_a_bug_in_sobjectfields/)
+
 ## 🔧 Since Fixed
 
 Thankfully, these WTF's have since been fixed by Salesforce. We'll keep them documented for historical purposes (and entertainment).
