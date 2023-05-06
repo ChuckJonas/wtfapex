@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/ChuckJonas/wtfapex#readme",
   "devDependencies": {
-    "doctoc": "^1.4.0"
+    "doctoc": "^2.2.1"
   }
 }
