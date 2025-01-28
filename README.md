@@ -30,6 +30,7 @@
   - [Generics (parameterized interfaces) exist, but you can't use them](#generics-parameterized-interfaces-exist-but-you-cant-use-them)
   - [Polymorphic Primitives](#polymorphic-primitives)
   - [Invalid HTTP method: PATCH](#invalid-http-method-patch)
+  - [Math.round(Decimal) overflows instead of throwing an exception](##mathrounddecimal-overflows-instead-of-throwing-an-exception)
 - [🔧 Since Fixed](#-since-fixed)
   - [Mutating Datetimes](#mutating-datetimes)
   - [More hashcode fun](#more-hashcode-fun)
@@ -444,6 +445,19 @@ HttpResponse res = h.send(req); // ! Invalid HTTP method: PATCH
 ```
 
 [There is a workaround](https://salesforce.stackexchange.com/questions/57215/how-can-i-make-a-patch-http-callout-from-apex), but only supported by some servers.
+
+### Math.round(Decimal) overflows instead of throwing an exception
+When dealing with Integer range extremes...
+```
+Decimal dec = 214748364656.6;
+
+Integer roundedDec = Math.round(dec);
+
+System.debug(LoggingLevel.INFO,roundedDec); //-143
+```
+[Documentation says it should throw an exception instead: " If the result is less than -2,147,483,648 or greater than 2,147,483,647, Apex generates an error."](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_math.htm#apex_System_Math_round)
+
+Credit to [@banderson5144](https://github.com/banderson5144) for finding. Source: [Salesforce Known Issue](https://issues.salesforce.com/issue/a028c00000zJNlEAAW/mathround-does-not-work-as-expected-when-dealing-with-integer-range-extremes)
 
 ## 🔧 Since Fixed
 
